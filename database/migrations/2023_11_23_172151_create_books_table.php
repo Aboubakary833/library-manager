@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('libraries', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->ulid("id")->primary();
+            $table->foreignUlid("author_id")->references("id")->on("authors")->cascadeOnDelete();
+            $table->foreignUlid("book_type_id")->references("id")->on("book_types")->cascadeOnDelete();
+            $table->foreignUuid("user_id")->references("id")->on("users")->cascadeOnDelete();
             $table->string("name");
-            $table->string("country");
-            $table->integer("country_code");
-            $table->string("currency");
-            $table->integer("phone");
-            $table->string("email")->nullable();
-            $table->string("logo")->nullable();
+            $table->integer("price");
+            $table->string("cover");
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('libraries');
+        Schema::dropIfExists('books');
     }
 };

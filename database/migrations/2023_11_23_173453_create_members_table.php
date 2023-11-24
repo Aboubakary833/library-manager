@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('libraries', function (Blueprint $table) {
+        Schema::create('members', function (Blueprint $table) {
             $table->ulid("id")->primary();
-            $table->string("name");
-            $table->string("country");
-            $table->integer("country_code");
-            $table->string("currency");
-            $table->integer("phone");
-            $table->string("email")->nullable();
-            $table->string("logo")->nullable();
+            $table->foreignUlid("user_id")->references("id")->on("users")->cascadeOnDelete();
+            $table->
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('libraries');
+        Schema::dropIfExists('members');
     }
 };
