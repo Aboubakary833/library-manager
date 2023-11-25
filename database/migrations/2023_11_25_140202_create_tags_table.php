@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('authors', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->ulid("id")->primary();
-            $table->string("firstname")->nullable();
-            $table->string("lastname")->nullable();
-            $table->string("nickname");
-            $table->date("birthday");
-            $table->date("date_of_death")->nullable();
+            $table->foreignUlid("book_id")->references("id")->on("users")->cascadeOnDelete();
+            $table->string("name");
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('authors');
+        Schema::dropIfExists('tags');
     }
 };

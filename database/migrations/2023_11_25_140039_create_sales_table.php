@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('members', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->ulid("id")->primary();
+            $table->foreignUlid("book_id")->references("id")->on("users")->cascadeOnDelete();
+            $table->foreignUlid("member_id")->references("id")->on("users")->cascadeOnDelete();
             $table->foreignUlid("user_id")->references("id")->on("users")->cascadeOnDelete();
-            $table->string("name");
-            $table->integer("phone")->nullable();
-            $table->string("email")->nullable();
+            $table->integer("price");
+            $table->integer("quantity");
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('members');
+        Schema::dropIfExists('sales');
     }
 };

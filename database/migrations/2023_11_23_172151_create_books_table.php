@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignUlid("author_id")->references("id")->on("authors")->cascadeOnDelete();
             $table->foreignUlid("book_type_id")->references("id")->on("book_types")->cascadeOnDelete();
             $table->foreignUuid("user_id")->references("id")->on("users")->cascadeOnDelete();
-            $table->string("name");
+            $table->string("title");
             $table->integer("price");
             $table->string("cover");
+            $table->integer("sales_stock")->default(0);
             $table->timestamps();
         });
     }
