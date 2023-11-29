@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('publishing_houses', function (Blueprint $table) {
             $table->ulid("id")->primary();
             $table->string("name");
-            $table->
             $table->timestamps();
         });
     }
