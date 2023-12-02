@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->dateTime("deleted_at");
+            $table->foreignUlid("deleted_by")->nullable()->references("id")->on("users")->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

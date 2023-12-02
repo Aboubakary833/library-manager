@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use Exception;
+use Carbon\Exceptions\InvalidTypeException;
+use OutOfRangeException;
 
 trait HasMatricule {
 
-	// protected $prefix = "";
+	public $matriculePrefix = "";
 
-	// protected $length = 5;
+	public $matriculeLength = 5;
 
 	public static function bootHasMatricule() {
 		static::creating(function($model) {
-			if($model->length > 255) {
-				throw new Exception("Too big matricule lenght: Must be less than 255 characters.");
-			}
+			match (true) {
+				gettype($model->matriculeLength) !== "int" => throw new InvalidTypeException("Matricule length must be of type integer."),
+				$model->matriculeLength > 255 => throw new OutOfRangeException("Too big matricule lenght: Must be less or equal to 255 characters."),
+			};
+			$matricule = $model->matriculePrefix . generateNumber($model->matriculeLength);
+			$model->matricule = $matricule;
+			$model->save();
 		});
 	}
-
-	// public static function generate() : string {
-	// 	return 
-	// }
 
 }
