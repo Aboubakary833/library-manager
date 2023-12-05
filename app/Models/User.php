@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -36,4 +38,29 @@ class User extends Authenticatable implements MustVerifyEmail
         'deleted_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function library() : BelongsTo
+    {
+        return $this->belongsTo(Library::class);
+    }
+
+    public function books() : HasMany
+    {
+        return $this->hasMany(Book::class);
+    }
+
+    public function members() : HasMany
+    {
+        return $this->hasMany(Member::class);
+    }
+
+    public function subscriptions() : HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function sales() : HasMany
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

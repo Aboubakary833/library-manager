@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->ulid("id")->primary();
-            $table->foreignUlid("library_id")->references("id")->on("libraries")->cascadeOnDelete();
+            $table->foreignUlid("library_id")->nullable()->references("id")->on("libraries")->cascadeOnDelete();
             $table->string('firstname');
             $table->string('lastname');
             $table->string("username")->unique();
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->dateTime("deleted_at");
+            $table->foreignUlid("added_by")->nullable()->references("id")->on("users")->nullOnDelete();
             $table->foreignUlid("deleted_by")->nullable()->references("id")->on("users")->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();

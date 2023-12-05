@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('book_tag', function (Blueprint $table) {
             $table->ulid("id")->primary();
-            $table->string("name");
+            $table->foreignUlid("book_id")->references("id")->on("books")->cascadeOnDelete();
+            $table->foreignUlid("tag_id")->references("id")->on("tags")->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('book_tag');
     }
 };
